@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes as Config, Route } from "react-router-dom";
 import { Layout } from "../components/Layout";
+import { Checkout } from "../containers/Checkout";
 import { ContentsProducts } from "../containers/ContentsProducts";
 import { Home } from "../containers/Home";
 
@@ -18,9 +19,6 @@ export function Routes() {
       {children}
     </Layout>
   )
-
-  // rota home
-
 
   return (
     <BrowserRouter>
@@ -56,6 +54,14 @@ export function Routes() {
           path="/smartwatches"
           element={
             <ContentsProducts />
+          }
+        />
+
+        <Route
+          // recebe nesse formato `nomeloja=NOME?` 
+          path="/checkout/:id"
+          element={
+            <Checkout />
           }
         />
 

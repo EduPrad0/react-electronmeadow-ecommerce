@@ -6,9 +6,11 @@ import LogoBlack from '../../assets/img/logoB.svg'
 import Bag from '../../assets/img/bag.svg' 
 import { links } from './links';
 import { GridLogin } from '../GridLogin';
+import { useOrders } from '../../hooks/useOrder';
 
 export function Navbar () {
   const navigation = useNavigate()
+  const { products } = useOrders()
   const LogoMeadow = () => (
     <Grid
       container
@@ -80,7 +82,7 @@ export function Navbar () {
         color="blue"
         ml="0.5rem"
         sx={{cursor: 'pointer'}}
-      >3 items</Typography>
+      >{products.length} items</Typography>
      </Grid>
 
      <GridLogin />

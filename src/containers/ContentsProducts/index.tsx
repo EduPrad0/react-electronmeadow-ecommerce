@@ -14,8 +14,9 @@ export function ContentsProducts() {
   const [currentPage, setCurrentPage] = useState(1)
   const [pages, setPages] = useState<IProduct[] | undefined>([] as IProduct[]);
   const queryClient = useQueryClient();
-  const { data, isFetching, isError, error } = useQuery<IProduct[]>(
-    "product_" + window.location.pathname.replace('/', ''),
+  const { data, isFetching, isError } = useQuery<IProduct[]>(
+    // "product_" + window.location.pathname.replace('/', ''),
+    "teste",
     async () => {
       const response = await api.get("getProducts" + window.location.pathname);
       return response.data;
@@ -23,6 +24,7 @@ export function ContentsProducts() {
   );
 
   useEffect(() => {
+    console.log( "product_" + window.location.pathname.replace('/', ''))
     // total de paginas
     const tps = Math.ceil(data ? data?.length / 20 : 1)
 

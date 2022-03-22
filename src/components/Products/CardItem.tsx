@@ -4,6 +4,7 @@ import { Grid, Typography } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
+import { useNavigate } from "react-router-dom";
 
 
 export interface ICardItemProps {
@@ -23,6 +24,7 @@ export interface ICardItemProps {
 
 export function CardItem({data}: ICardItemProps) {
   const [checkProduct, setCheckProduct] = useState(false);
+  const navigation = useNavigate()
 
   const StarsProduct = () => {
     const vPS = {
@@ -79,6 +81,7 @@ export function CardItem({data}: ICardItemProps) {
       onMouseLeave={() => setCheckProduct(false)}
       style={{ cursor: 'pointer' }}
       maxWidth="305px"
+      onClick={() => navigation('/checkout/'+data.id)}
     >
 
       <Grid
@@ -123,7 +126,6 @@ export function CardItem({data}: ICardItemProps) {
               justifyContent="center"
               alignItems="center"
               padding="5px"
-
             >
               <Typography
                 variant="body1"
