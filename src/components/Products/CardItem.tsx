@@ -8,69 +8,22 @@ import { useNavigate } from "react-router-dom";
 
 
 export interface ICardItemProps {
-  data : {
-    id: string;
-    is_favorited: boolean;
+  data: {
+    id: number;
     url_image: string;
     description: string;
     pricing: string;
-    how_many_times: string | number;
-    avaliation: number;
+    how_many_times: number;
     total_avaliation: number;
-    comments?: string;
+    quantity: number;
   }
 }
 
 
-export function CardItem({data}: ICardItemProps) {
+export function CardItem({ data }: ICardItemProps) {
   const [checkProduct, setCheckProduct] = useState(false);
   const navigation = useNavigate()
 
-  const StarsProduct = () => {
-    const vPS = {
-      oneS: data.total_avaliation / 5,
-      twoS: data.total_avaliation / 4,
-      threeS: data.total_avaliation / 3,
-      fourS: data.total_avaliation / 2,
-    }
-
-    const avaliationCalc = data.avaliation / data.total_avaliation;
-    const arrayF = (n: number) => new Array(n);
-    let nvalue = 1;
-    if (avaliationCalc < vPS.oneS) {
-      nvalue = 5;
-    }
-
-    if (avaliationCalc > vPS.twoS) {
-      nvalue = 4;
-    }
-
-    if (avaliationCalc > vPS.threeS) {
-      nvalue = 3;
-    }
-
-    if (avaliationCalc > vPS.fourS) {
-      nvalue = 2;
-    }
-
-    return (
-      <Grid
-        container
-        color="yellow"
-        alignItems="center"
-        justifyContent="center"
-      >
-
-        {
-          arrayF(nvalue).fill('1').map((item, index) => (
-            <Fragment key={index}>
-              <StarsRoundedIcon />
-            </Fragment>
-          ))
-        }
-      </Grid>
-    )
-  }
 
   return (
     <Grid
@@ -81,7 +34,7 @@ export function CardItem({data}: ICardItemProps) {
       onMouseLeave={() => setCheckProduct(false)}
       style={{ cursor: 'pointer' }}
       maxWidth="305px"
-      onClick={() => navigation('/checkout/'+data.id)}
+      onClick={() => navigation(`/product/${window.location.pathname.replace('/', '')}/${data.id}`)}
     >
 
       <Grid
@@ -99,11 +52,7 @@ export function CardItem({data}: ICardItemProps) {
           width="30px"
           bgcolor="#e0e0e0"
         >
-          {
-            data.is_favorited
-              ? <FavoriteIcon color="error" />
-              : <FavoriteBorderIcon />
-          }
+          <FavoriteIcon color="error" />
         </Grid>
 
         <img
@@ -150,40 +99,51 @@ export function CardItem({data}: ICardItemProps) {
           height="90px"
         >
           {data.description}
+
         </Typography>
-        {
-          <StarsProduct />
-        }
+        <Grid
+          container
+          color="yellow"
+          alignItems="center"
+          justifyContent="center"
+        >
 
-      <Typography
-        variant="body1"
-        color="#04d483"
-        fontWeight="bold"
-      >
-        FRETE GRATIS
-      </Typography>
+          <StarsRoundedIcon />
+          <StarsRoundedIcon />
+          <StarsRoundedIcon />
+          <StarsRoundedIcon />
+          <StarsRoundedIcon />
+        </Grid>
 
-      <Typography
-        variant="h6"
-        fontWeight="bold"
-      >
-        R$ {data.pricing}
-      </Typography>
-      <Typography
-        variant="body1"
-      >
-        ou {data.how_many_times}x 
-        R$ {
-          ( 
-            Number(data.pricing.replace(',','.')) 
-              / 
-            Number(data.how_many_times)
-          )
-          .toFixed(2)
-            .replace('.', ',')
-        }
-      </Typography>
-    </Grid>
+        <Typography
+          variant="body1"
+          color="#04d483"
+          fontWeight="bold"
+        >
+          FRETE GRATIS
+        </Typography>
+
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+        >
+          R$ {data.pricing}
+        </Typography>
+        <Typography
+          variant="body1"
+        >
+          ou {data.how_many_times}x
+          R$ {
+            (
+              Number(data.pricing.replace(',', '.'))
+              /
+              Number(data.how_many_times)
+            )
+              .toFixed(2)
+              .replace('.', ',')
+          }
+        </Typography>
+      </Grid>
     </Grid >
   )
 }

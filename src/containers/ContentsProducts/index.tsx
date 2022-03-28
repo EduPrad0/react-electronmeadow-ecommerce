@@ -1,31 +1,33 @@
 import { FormControlLabel, Grid, Typography } from "@mui/material"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { useQuery, useQueryClient, } from "react-query";
 import api from "../../services/api";
 import { Navbar } from "../../components/Navbar"
 import { IProduct, Products } from "../../components/Products";
 import { useEffect, useState } from "react";
 import Pagination from '@mui/material/Pagination';
+import { FILTERS_TYPES } from "./filters";
 
-
+const PER_PAGE = 20;
 
 export function ContentsProducts() {
   const [currentPage, setCurrentPage] = useState(1)
   const [pages, setPages] = useState<IProduct[] | undefined>([] as IProduct[]);
-  const queryClient = useQueryClient();
-  const { data, isFetching, isError } = useQuery<IProduct[]>(
-    // "product_" + window.location.pathname.replace('/', ''),
-    "teste",
-    async () => {
-      const response = await api.get("getProducts" + window.location.pathname);
-      return response.data;
-    }
-  );
+  const [data, setData] = useState<IProduct[]>([]);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    console.log( "product_" + window.location.pathname.replace('/', ''))
-    // total de paginas
+    (async() => {
+      try {
+        const response = await api.get("api/products" + window.location.pathname); 
+        setData(response.data);
+      } catch (e) {
+        setIsError(true);
+      }
+    })()
+  }, [window.location.pathname])
+
+  useEffect(() => {
     const tps = Math.ceil(data ? data?.length / 20 : 1)
 
     if (data) {
@@ -86,9 +88,11 @@ export function ContentsProducts() {
               name="controlled-radio-buttons-group"
               defaultValue="more_popular"
             >
-              <FormControlLabel value="more_popular" control={<Radio />} label="More popular" />
-              <FormControlLabel value="biggest_price" control={<Radio />} label="Biggest price" />
-              <FormControlLabel value="lowest_price" control={<Radio />} label="Lowest price" />
+              {
+                FILTERS_TYPES.map((_, i) => (
+                  <FormControlLabel value={_.value} key={i} control={<Radio />} label={_.label} />
+                ))
+              }
             </RadioGroup>
           </Grid>
         </Grid>
@@ -105,7 +109,6 @@ export function ContentsProducts() {
             : 
             <Products
               data={pages}
-              isFetching={isFetching}
             />
           }
         </Grid>
@@ -116,7 +119,7 @@ export function ContentsProducts() {
         pb="5rem"
       >
         <Pagination
-          count={Math.trunc(data ? data?.length / 20 : 1)}
+          count={Math.trunc(data ? data?.length / PER_PAGE : 1)}
           page={currentPage}
           onChange={(e, v) => setCurrentPage(v)}
         />

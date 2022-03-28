@@ -2,6 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import LogoBlack from '../../assets/img/logoB.svg' 
 import Bag from '../../assets/img/bag.svg' 
 import { links } from './links';
@@ -15,7 +16,7 @@ export function Navbar () {
     <Grid
       container
       alignItems="center"
-      maxWidth="500px"
+      maxWidth="300px"
       minWidth="250px"
     >
       <img
@@ -75,8 +76,9 @@ export function Navbar () {
      <Grid
       display="flex"
       alignItems="center"
+      onClick={() => navigation('/orders')}
      >
-      <img style={{cursor: 'pointer'}} src={Bag} alt="bag"/>
+      <AddShoppingCartIcon/>
       <Typography
         variant="body1"
         color="blue"

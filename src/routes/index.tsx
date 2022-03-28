@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes as Config, Route } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { Checkout } from "../containers/Checkout";
 import { ContentsProducts } from "../containers/ContentsProducts";
 import { Home } from "../containers/Home";
-
+import { Product } from "../containers/Product";
+import { Orders } from '../containers/Orders'
 
 
 interface IProutes {
@@ -58,10 +58,16 @@ export function Routes() {
         />
 
         <Route
-          // recebe nesse formato `nomeloja=NOME?` 
-          path="/checkout/:id"
+          path="/product/:category/:id"
           element={
-            <Checkout />
+            <Product />
+          }
+        />
+        
+        <Route
+          path="/orders"
+          element={
+            <Orders />
           }
         />
 
