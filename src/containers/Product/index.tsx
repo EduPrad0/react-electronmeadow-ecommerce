@@ -26,7 +26,7 @@ export function Product() {
     useEffect(() => {
 
         (async () => {
-            if(category && !JSON.stringify(links).includes(category)){
+            if((category && !JSON.stringify(links).includes(category)) && !window.location.pathname.includes('orders')){
                 navigation('/')
             } 
             try {
@@ -67,7 +67,7 @@ export function Product() {
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
-                padding="0 5rem"
+                padding="0 5rem 15rem"
             >
                 <Typography
                     variant="h6"
@@ -144,7 +144,7 @@ export function Product() {
                                 fontSize="2rem"
                                 fontWeight="300"
                             >
-                                R$ {product?.pricing?.split(",")[0]}
+                                R$ {product?.pricing?.split(".")[0]}
                             </Typography>
 
                             <Typography
@@ -153,7 +153,7 @@ export function Product() {
                                 fontWeight="300"
 
                             >
-                                {product?.pricing?.split(",")[1]}
+                                {product?.pricing?.split(".")[1]}
                             </Typography>
                         </Grid>
                         <Grid>
@@ -163,9 +163,8 @@ export function Product() {
                                 variant="h6"
                                 display="flex"
                                 fontWeight="regular"
-                                onClick={() => console.log(orders_products)}
                             >
-                                em <Typography ml="5px" variant="body1" fontSize="1.25rem" color="#29c56f">6x R$ 23 sem juros</Typography>
+                                em <Typography ml="5px" variant="body1" fontSize="1.25rem" color="#29c56f">{product.how_many_times}x R$ {(Number(product.pricing) / product.how_many_times).toFixed(2).replace(".", ",")} sem juros</Typography>
                             </Typography>
                         </Grid>
 

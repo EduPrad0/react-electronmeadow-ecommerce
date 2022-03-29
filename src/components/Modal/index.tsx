@@ -13,7 +13,7 @@ const style = (rest: any) => {
   }
 };
 
-interface IModal {
+export interface IModal {
   stylesModal?: {};
   isOpen: boolean;
   onClose(): void;

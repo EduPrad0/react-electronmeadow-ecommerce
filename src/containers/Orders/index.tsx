@@ -79,7 +79,7 @@ export function Orders() {
         display="flex"
         flexDirection="column"
         alignItems="center"
-        padding="0 5rem 5rem"
+        padding="0 5rem 25rem"
       >
         <Grid
           mt="1rem"
@@ -120,7 +120,7 @@ export function Orders() {
           <Typography 
             variant="body1"
             width="100px"
-            border="1px solid black"
+            borderBottom="3px solid black"
             ml={isCart ? '6rem' : '13rem'}
             style={{transition: 'all 0.5s'}}
           />

@@ -1,8 +1,13 @@
 import { Grid, Typography } from '@mui/material'
 
 import PersonIcon from '@mui/icons-material/Person';
+import { DOMAttributes } from 'react';
 
-export function GridLogin () {
+interface ILogin extends DOMAttributes<any> {
+  logged: boolean;
+}
+
+export function GridLogin ({logged, ...rest}:ILogin) {
   const logado = true;
   return (
     <Grid
@@ -12,6 +17,7 @@ export function GridLogin () {
       border={`1px solid ${logado ? 'green': 'black'}`}
       borderRadius="16px"
       sx={{cursor: 'pointer'}}
+      {...rest}
     >
       <PersonIcon color={logado ? 'success': 'inherit'}/>
       
@@ -20,7 +26,7 @@ export function GridLogin () {
         fontWeight="bold"
         ml="0.5rem"
       >
-        {logado ? 'Eduardo' : 'Entrar'}
+        {logged ? 'Eduardo' : 'Entrar'}
       </Typography>
     </Grid>
   )

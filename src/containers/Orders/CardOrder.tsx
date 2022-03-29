@@ -4,6 +4,7 @@ import { IProductOrder } from '.';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { useOrders } from '../../hooks/useOrder';
+import { useNavigate } from 'react-router-dom';
 
 interface ICard {
   item: IProductOrder
@@ -13,6 +14,8 @@ interface ICard {
 export function CardOrder({ item }: ICard) {
   const [quantitySelected, setQuantitySelected] = useState(item.quantitySelected);
   const { addingProduct, removeProduct } = useOrders()
+
+  const navigation = useNavigate();
 
   function handleQuantitySelected(type: 'add' | 'remove') {
     const qS = type === 'add' ? quantitySelected + 1 : quantitySelected - 1;
@@ -86,7 +89,7 @@ export function CardOrder({ item }: ICard) {
             color="#3483fa"
             style={{ cursor: "pointer" }}
             ml="5rem"
-
+            onClick={() => navigation(`/product/orders/${item.id}`)}
           >
             Ver produto
           </Typography>
