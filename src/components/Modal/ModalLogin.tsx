@@ -1,8 +1,8 @@
-import { AccountCircle } from "@mui/icons-material";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import ProfileIcon from '../../assets/img/profile_icon.png'
-
+import { useAuth } from "../../hooks/useAuth";
 interface IUserProps {
     user: string;
     password: string;
@@ -12,16 +12,43 @@ interface closeModal {
     closeModal(): void;
 }
 
-export function ModalLogin({closeModal}: closeModal) {
+export function ModalLogin({ closeModal }: closeModal) {
+    const [user, setUser] = useState<IUserProps>({} as IUserProps);
+    const { signIn, user: userAuth } = useAuth();
 
-
-    
-    const [ user, setUser ] = useState<IUserProps>({} as IUserProps);
 
     const handleCloseAll = () => {
         setUser({} as IUserProps);
         closeModal();
     }
+
+    const handleSignIn = async () => {
+        if (user.password === "") {
+            return toast('Por favor digite sua senha !', {
+                type: 'warning',
+            })
+        }
+
+        if (user.user === "") {
+            return toast('Por favor digite seu usuário !', {
+                type: 'warning',
+            })
+        }
+
+        const response = await signIn({
+            login: user.user,
+            password: user.password
+        })
+    }
+
+    useEffect(() => {
+        if (userAuth) {
+            handleCloseAll()
+            toast('Bem vindo de volta ' + userAuth.name, {
+                type: "success"
+            })
+        }
+    }, [userAuth])
 
     return (
         <Grid
@@ -32,7 +59,7 @@ export function ModalLogin({closeModal}: closeModal) {
                 right="-4rem"
                 onClick={() => handleCloseAll()}
             >
-                <img width="50px" src="https://www.smiles.com.ar/images/svg/icons/gray/ic-close-circle.svg" alt="fechar" style={{cursor: 'pointer'}}/>
+                <img width="50px" src="https://www.smiles.com.ar/images/svg/icons/gray/ic-close-circle.svg" alt="fechar" style={{ cursor: 'pointer' }} />
             </Grid>
             <Grid
                 position="absolute"
@@ -55,7 +82,7 @@ export function ModalLogin({closeModal}: closeModal) {
 
             </Grid>
 
-            <Grid 
+            <Grid
                 pt="2rem"
                 component="form"
                 display="flex"
@@ -63,33 +90,45 @@ export function ModalLogin({closeModal}: closeModal) {
                 alignItems="center"
                 justifyContent="center"
                 mx="1rem"
+                onSubmit={handleSignIn}
             >
-                    <TextField 
-                        style={{marginBottom: '2rem'}} 
-                        id="input-user" 
-                        label="User" 
-                        fullWidth 
-                        variant="outlined" 
-                        onChange={(e) => setUser({...user, password: e.target.value})}
-                    />
+                <TextField
+                    style={{ marginBottom: '2rem' }}
+                    id="input-user"
+                    label="User"
+                    fullWidth
+                    variant="outlined"
+                    onChange={(e) => setUser(
+                        {
+                            ...user,
+                            user: e.target.value
+                        }
+                    )}
+                />
 
-                    <TextField 
-                        id="input-pass" 
-                        label="Password" 
-                        type="password" 
-                        fullWidth 
-                        variant="outlined" 
-                        onChange={(e) => setUser({...user, password: e.target.value})}
-                    />
+
+                <TextField
+                    id="input-pass"
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    variant="outlined"
+                    onChange={(e) => setUser(
+                        {
+                            ...user,
+                            password: e.target.value
+                        }
+                    )}
+                />
             </Grid>
 
             <Grid
-                 display="flex"
-                 alignItems="center"
-                 justifyContent="center"
-                 mt="1rem"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                mt="1rem"
             >
-                <Button variant="contained">Entrar</Button>
+                <Button variant="contained" onClick={handleSignIn}>Entrar</Button>
             </Grid>
             <Typography
                 variant="body2"
@@ -107,18 +146,18 @@ export function ModalLogin({closeModal}: closeModal) {
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-            >   
-                <Typography 
+            >
+                <Typography
                     variant="h5"
                     fontWeight="bold"
                     color="white"
                 >
                     Não tem conta?
                 </Typography>
-                <Button 
+                <Button
                     variant="outlined"
                     color="inherit"
-                    style={{marginTop: '10px'}}
+                    style={{ marginTop: '10px' }}
                 >
                     Cadastrar
                 </Button>

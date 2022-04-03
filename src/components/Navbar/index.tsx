@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material'
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -9,20 +9,25 @@ import { GridLogin } from '../GridLogin';
 import { useOrders } from '../../hooks/useOrder';
 import { Modal } from '../Modal';
 import { ModalLogin } from '../Modal/ModalLogin';
+import { useAuth } from '../../hooks/useAuth';
 
 const styleModal = {
   marginTop: '-80px',
   width: '360px',
-  height: '502px',
+  height: '380px',
   border: '0'
 }
 
 export function Navbar() {
   const [ openModal, setOpenModal ] = useState(false);
-  
+  const { user } = useAuth();
+  const [logged, setLogged] = useState(user ? true : false);
   const navigation = useNavigate()
   const { products } = useOrders()
 
+  useEffect(() => {
+    setLogged(user ? true : false)
+  }, [user])
   
   const LogoMeadow = () => (
     <Grid
@@ -30,7 +35,7 @@ export function Navbar() {
       alignItems="center"
       maxWidth="300px"
       minWidth="250px"
-      bgcolor="white"
+      bgcolor="white!important"
     >
       <img
         width="40px"
@@ -108,7 +113,7 @@ export function Navbar() {
           >{products.length} items</Typography>
         </Grid>
 
-        <GridLogin logged={false} onClick={() => setOpenModal(true)}/>
+        <GridLogin  isLogged={logged} onClick={() => !user && setOpenModal(true)}/>
       </Grid>
     </>
   );

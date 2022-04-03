@@ -1,10 +1,11 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Grid, Typography } from "@mui/material";
 
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { SaveHeart } from "../SaveHeart";
 
 
 export interface ICardItemProps {
@@ -24,38 +25,41 @@ export function CardItem({ data }: ICardItemProps) {
   const [checkProduct, setCheckProduct] = useState(false);
   const navigation = useNavigate()
 
+ 
+
 
   return (
     <Grid
-      border="1px solid #e6e6e6"
+    border="1px solid #e6e6e6"
       padding="4px"
       borderTop="0"
       onMouseEnter={() => setCheckProduct(true)}
       onMouseLeave={() => setCheckProduct(false)}
       style={{ cursor: 'pointer' }}
       maxWidth="305px"
-      onClick={() => navigation(`/product/${window.location.pathname.replace('/', '')}/${data.id}`)}
-    >
+      >
 
       <Grid
         position="relative"
+
       >
         <Grid
           display="flex"
           alignItems="center"
           justifyContent="center"
-
+          zIndex={999}
           position="absolute"
           borderRadius="100%"
           overflow="hidden"
           height="30px"
           width="30px"
           bgcolor="#e0e0e0"
-        >
-          <FavoriteIcon color="error" />
+          >
+          <SaveHeart id_product={data.id} />
         </Grid>
 
         <img
+          onClick={() => navigation(`/product/${window.location.pathname.replace('/', '')}/${data.id}`)}
           width="299px"
           height="299px"
           src={data.url_image}
@@ -79,6 +83,8 @@ export function CardItem({ data }: ICardItemProps) {
               <Typography
                 variant="body1"
                 color="inherit"
+                onClick={() => navigation(`/product/${window.location.pathname.replace('/', '')}/${data.id}`)}
+
               >
                 Conferir
               </Typography>

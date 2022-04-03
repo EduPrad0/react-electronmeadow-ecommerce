@@ -14,8 +14,8 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: [
-      "League Gothic",
       "Roboto",
+      "Josefin Sans",
       "Helvetica",
       "Arial",
       "sans-serif",

@@ -10,6 +10,7 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import api from "../../services/api";
 import { useOrders } from "../../hooks/useOrder";
 import { SelectQuantity } from "../../components/SelectQuantity";
+import { SaveHeart } from "../../components/SaveHeart";
 
 interface IItemAdditional {
     icon: any;
@@ -24,7 +25,6 @@ export function Product() {
     const { addingProduct, products: orders_products } = useOrders();
 
     useEffect(() => {
-
         (async () => {
             if((category && !JSON.stringify(links).includes(category)) && !window.location.pathname.includes('orders')){
                 navigation('/')
@@ -114,6 +114,7 @@ export function Product() {
                             <Grid
                                 display="flex"
                                 justifyContent="space-between"
+                                sx={{cursor: 'pointer'}}
                             >
                                 <Typography
                                     variant="body1"
@@ -124,7 +125,7 @@ export function Product() {
                                 >
                                     Novo | 15 vendidos
                                 </Typography>
-                                <FavoriteBorderIcon sx={{cursor: 'pointer'}}/>
+                                <SaveHeart id_product={product.id} />
                             </Grid>
                             <Typography
                                 variant="h6"

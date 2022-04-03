@@ -20,24 +20,26 @@ interface IProductProps {
 
 export function Products({ data }: IProductProps) {
   return (
-      <>
-        <Grid>
-          <Grid
-            display="flex"
-            alignItems="center"
-            flexWrap="wrap"
-          >
-            {
-              data?.map((item) => (
+    <>
+      <Grid>
+        <Grid
+          display="flex"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          {
+            data?.map((item) => {
+              return (
                 <Grid key={item.id + " product"} mx="0.7rem" my="1rem">
                   <CardItem data={item} />
                 </Grid>
               )
-              )
+            }
+            )
           }
-          </Grid>
         </Grid>
+      </Grid>
 
-      </>
-    );
+    </>
+  );
 }

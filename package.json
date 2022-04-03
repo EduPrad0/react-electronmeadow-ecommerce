@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:https": "sudo HTTPS=true PORT=443 yarn start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

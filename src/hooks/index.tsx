@@ -6,21 +6,24 @@ import theme from "../assets/styles/theme";
 import 'react-toastify/dist/ReactToastify.css';
 import { queryClient } from "../services/queryClient";
 import OrderProvider from "./useOrder";
+import { AuthProvider } from "./useAuth";
 
 interface IProvider {
   children: React.ReactNode
 }
 
-export function Providers({children}: IProvider) {
+export function Providers({ children }: IProvider) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer />
-      <OrderProvider>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </MuiThemeProvider>
-      </OrderProvider>
+      <AuthProvider>
+        <ToastContainer />
+        <OrderProvider>
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            {children}
+          </MuiThemeProvider>
+        </OrderProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

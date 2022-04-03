@@ -5,6 +5,7 @@ import { ContentsProducts } from "../containers/ContentsProducts";
 import { Home } from "../containers/Home";
 import { Product } from "../containers/Product";
 import { Orders } from '../containers/Orders'
+import { Register } from "../containers/Register";
 
 
 interface IProutes {
@@ -29,6 +30,13 @@ export function Routes() {
             <Proutes children={<Home />} />
           }
         />
+
+        <Route
+          path="/register"
+          element={
+            <Register />
+          }
+        />
         <Route
           path="/shop"
           element={
@@ -49,7 +57,7 @@ export function Routes() {
             <ContentsProducts />
           }
         />
-        
+
         <Route
           path="/smartwatches"
           element={
@@ -63,7 +71,7 @@ export function Routes() {
             <Product />
           }
         />
-        
+
         <Route
           path="/orders"
           element={

@@ -7,6 +7,9 @@ import { IProduct, Products } from "../../components/Products";
 import { useEffect, useState } from "react";
 import Pagination from '@mui/material/Pagination';
 import { FILTERS_TYPES } from "./filters";
+import { toast } from "react-toastify";
+import { useAuth } from "../../hooks/useAuth";
+
 
 const PER_PAGE = 20;
 
@@ -15,16 +18,29 @@ export function ContentsProducts() {
   const [pages, setPages] = useState<IProduct[] | undefined>([] as IProduct[]);
   const [data, setData] = useState<IProduct[]>([]);
   const [isError, setIsError] = useState(false);
+  const { user, updateLikedProducts } = useAuth(); 
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       try {
-        const response = await api.get("api/products" + window.location.pathname); 
+        const response = await api.get("api/products" + window.location.pathname);
         setData(response.data);
       } catch (e) {
         setIsError(true);
       }
     })()
+
+    if (user) {
+      (async () => {
+        try {
+          const newStorage = await api.get('/likes');
+          updateLikedProducts(JSON.stringify(newStorage.data.likes_for_user))
+        } catch (e) {
+          toast('erro ao buscar os itens salvos', { type: 'error' })
+        }
+      })()
+    }
+
   }, [window.location.pathname])
 
   useEffect(() => {
@@ -38,7 +54,7 @@ export function ContentsProducts() {
   }, [currentPage, data])
 
   function comparePricing(products: any) {
-    const newArray = products.sort(function compare(a:any, b:any) {
+    const newArray = products.sort(function compare(a: any, b: any) {
       const ap = Number(a.pricing.replace(",", "."))
       const bp = Number(b.pricing.replace(",", "."))
       if (ap < bp)
@@ -62,7 +78,7 @@ export function ContentsProducts() {
           textTransform="capitalize"
           textAlign="center"
         >
-          {window.location.pathname.replace("/", "")} 
+          {window.location.pathname.replace("/", "")}
         </Typography>
       </Grid>
       <Grid
@@ -98,18 +114,18 @@ export function ContentsProducts() {
         </Grid>
         <Grid item xs={10}>
           {
-            isError 
-            ? <Typography 
-              variant="h5" 
-              fontWeight="bold"
-              textAlign="center"
-            >
+            isError
+              ? <Typography
+                variant="h5"
+                fontWeight="bold"
+                textAlign="center"
+              >
                 Ocorreu um erro ao buscar os produtos
-            </Typography> 
-            : 
-            <Products
-              data={pages}
-            />
+              </Typography>
+              :
+              <Products
+                data={pages}
+              />
           }
         </Grid>
       </Grid>
