@@ -30,7 +30,7 @@ export function SaveHeart ({id_product}: ISaveHeart) {
 
   async function handleLikedProduct () {
     try {
-      const { data: responseData } = await api.post('/likes', {
+      const { data: responseData } = await api.post('/api/likes', {
         type: "add",
         id_product: Number(id_product)
       })
@@ -55,7 +55,7 @@ export function SaveHeart ({id_product}: ISaveHeart) {
 
   async function handleRemoveProduct () {
     try {
-      const { data: responseData } = await api.post('/likes', {
+      const { data: responseData } = await api.post('/api/likes', {
         type: "delete",
         id_product: idLike
       })

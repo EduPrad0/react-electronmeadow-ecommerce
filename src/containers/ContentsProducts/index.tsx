@@ -23,7 +23,7 @@ export function ContentsProducts() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await api.get("api/products" + window.location.pathname);
+        const response = await api.get("/api/products" + window.location.pathname);
         setData(response.data);
       } catch (e) {
         setIsError(true);
@@ -33,7 +33,7 @@ export function ContentsProducts() {
     if (user) {
       (async () => {
         try {
-          const newStorage = await api.get('/likes');
+          const newStorage = await api.get('/api/likes');
           updateLikedProducts(JSON.stringify(newStorage.data.likes_for_user))
         } catch (e) {
           toast('erro ao buscar os itens salvos', { type: 'error' })

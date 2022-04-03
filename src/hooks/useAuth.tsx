@@ -56,7 +56,7 @@ export interface User {
 
     const signIn = useCallback(async ({ login, password }) => {
       try {
-        const response = await api.post("/login", {
+        const response = await api.post("/api/login", {
           name: login,
           password,
         });
@@ -79,7 +79,7 @@ export interface User {
       }
 
       try {
-        const response = await api.get("/likes");
+        const response = await api.get("/api/likes");
         const { likes_for_user } = response.data;
         localStorage.setItem("@meadow:liked_products", JSON.stringify(likes_for_user));
         setData({ ...data, liked_products: likes_for_user });

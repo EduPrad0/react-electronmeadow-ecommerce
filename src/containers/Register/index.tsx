@@ -57,7 +57,7 @@ export function Register() {
     }
 
     try {
-      await api.post('/register', {
+      await api.post('/api/register', {
         name: userRegister.username,
         password: userRegister.password,
         email: userRegister.email,
