@@ -1,3 +1,3 @@
-#### Web sendo desenvolvido em React
+#### LojaWeb sendo desenvolvido em React
 
 ## Contribua
