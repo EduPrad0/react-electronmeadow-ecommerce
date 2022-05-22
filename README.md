@@ -1,3 +1,3 @@
-{
-  "token": "U2FsdGVkX19orjEoXgMrB35xzpSi0095pEk6xs7HXEgOg+4DpbG1CfvV+3a5eVw6h7y9C1YM0Qw/QjEDvX7x4yMZOzTrCXyREYC7z9oojnM="
-}
+#### Web sendo desenvolvido em React
+
+## Contribua
